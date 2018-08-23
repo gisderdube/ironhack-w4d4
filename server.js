@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const Movie = require('./models/Movie')
 const path = require('path')
+const bodyParser = require('body-parser')
 
 mongoose
     .connect(
@@ -13,6 +14,8 @@ mongoose
     })
 
 const app = express()
+
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'views'))
@@ -28,13 +31,27 @@ app.get('/movie', (req, res) => {
 
     const query = {
         $and: [
-            title ? { title } : {},
+            title ? { title: { $regex: new RegExp('^' + title + '.*', 'i') } } : {},
             rate ? { rate } : {},
             year ? { year } : {},
         ],
     }
 
-    console.log(query['$and'])
+    Movie.find(query).then(movies => res.send(movies))
+})
+
+app.post('/movie', (req, res) => {
+    const {
+        title, rate, year,
+    } = req.body
+
+    const query = {
+        $and: [
+            title ? { title: { $regex: new RegExp('^' + title + '.*', 'i') } } : {},
+            rate ? { rate } : {},
+            year ? { year } : {},
+        ],
+    }
 
     Movie.find(query).then(movies => res.send(movies))
 })
