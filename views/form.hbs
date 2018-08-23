@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="/movie" method="GET">
+        <label for="title">Title</label>
+        <input type="text" name="title" placeholder='Title' id="title">
+        <br>
+        <br>
+
+        <label for="rate">Rating</label>
+        <input type="number" step='0.1' min='0' max='10' name="rate" placeholder='Rating' id='rate'>
+        <br>
+        <br>
+
+        <label for="year">Year</label>
+        <input type="number" min='1900' max='2018' name="year" placeholder='Year' id='year'>
+        <br>
+        <br>
+
+        <input type="submit">
+    </form>
+</body>
+
+</html>
