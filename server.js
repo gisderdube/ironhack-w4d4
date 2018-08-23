@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const Movie = require('./models/Movie')
 const path = require('path')
 const bodyParser = require('body-parser')
+const moment = require('moment')
 
 mongoose
     .connect(
@@ -19,6 +20,11 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'views'))
+
+app.use((req, res, next) => {
+    console.log(`${moment().format('YYYY-MM-DD HH:mm:ss')} - ${req.method} - ${req.url}`)
+    next()
+})
 
 app.get('/search', (req, res) => {
     res.render('form')
